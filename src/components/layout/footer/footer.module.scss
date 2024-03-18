@@ -1,0 +1,39 @@
+.Footer {
+  padding-top: 100px;
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    .footerText {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+  }
+  .color {
+    display: flex;
+    width: 100%;
+    .yellow {
+      display: flex;
+      align-content: center;
+      justify-content: space-around;
+      background-color: rgb(242, 237, 114);
+      width: 100%;
+      padding-block: 30px;
+    }
+  }
+  .green {
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    padding-block: 30px;
+    background-color: rgb(48, 114, 63);
+    width: 100%;
+  }
+}

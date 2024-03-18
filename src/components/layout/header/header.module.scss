@@ -1,0 +1,35 @@
+.Header {
+  margin-block: 25px;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .url {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .urlText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        p {
+          color: rgb(92, 91, 91);
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+
+      .photo {
+        width: 100px;
+      }
+
+      .photoExit {
+        width: 30px;
+      }
+    }
+  }
+}
