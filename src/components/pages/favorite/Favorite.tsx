@@ -1,4 +1,4 @@
-import { useGetfavoriteQuery } from "../../../redux/crud/favorite/favotite";
+import { useGetfavoriteQuery } from "../../../redux/api/favorite";
 import scss from "./favorite.module.scss";
 
 const Favorite = () => {
