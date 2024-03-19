@@ -22,7 +22,19 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["basket"],
     }),
+    buyProduct: builder.mutation({
+      query: ({ buyProducts, id }) => ({
+        url: `product-buy/${id}`,
+        method: "PATCH",
+        body: buyProducts,
+      }),
+      invalidatesTags: ["basket"],
+    }),
   }),
 });
 
-export const { useGetBacketQuery, usePostBacketProductsMutation } = api;
+export const {
+  useGetBacketQuery,
+  usePostBacketProductsMutation,
+  useBuyProductMutation,
+} = api;

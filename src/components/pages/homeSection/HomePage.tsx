@@ -4,27 +4,39 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { useFormik } from "formik";
-
 import { Link } from "react-router-dom";
-
 import {
   useDeleteProductMutation,
+  useEditProductsMutation,
   useGetProductsQuery,
   usePostProductsMutation,
 } from "../../../redux/api/products";
 import { usePostFavoriteProductsMutation } from "../../../redux/api/favorite";
 import { usePostBacketProductsMutation } from "../../../redux/api/backet";
 
+type itemType = {
+  _id: string;
+  productName: string;
+  quantity: string;
+  price: string;
+  photoUrl: string;
+};
+
 const HomePage = () => {
   const [modal, setModal] = useState(false);
   const handleModal = () => {
     setModal(!modal);
   };
-
+  const [productName, setProductName] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [edit, setEdit] = useState<number | null>(null);
   const [postProducts] = usePostProductsMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [postFavoriteProducts] = usePostFavoriteProductsMutation();
   const [postBacketProducts] = usePostBacketProductsMutation();
+  const [editProducts] = useEditProductsMutation();
   const { data, isLoading } = useGetProductsQuery();
 
   console.log(modal);
@@ -56,6 +68,25 @@ const HomePage = () => {
 
   const basket = async (id: string) => {
     await postBacketProducts(id);
+  };
+
+  const EditFunc = async (_id: string) => {
+    const newData = {
+      productName,
+      quantity,
+      price,
+      photoUrl,
+    };
+    editProducts({ _id, newData });
+    setEdit(null);
+  };
+
+  const upData = (item: itemType) => {
+    setEdit(+item._id);
+    setProductName(item.productName);
+    setQuantity(item.quantity);
+    setPrice(item.price);
+    setPhotoUrl(item.photoUrl);
   };
   return (
     <div className={scss.HomePage}>
@@ -104,29 +135,75 @@ const HomePage = () => {
             </>
           ) : (
             <>
-              {data?.map((item, index) => (
-                <div className={scss.productCard} key={index}>
-                  <Link to={`/products/${item._id}`}>
-                    <img src={item.photoUrl} alt="" />
-                  </Link>
-                  <p>{item.productName}</p>
+              {data?.map((item) => (
+                <div className={scss.productCard} key={item._id}>
+                  {edit === +item._id ? (
+                    <>
+                      <TextField
+                        id="productName"
+                        label="product name"
+                        variant="outlined"
+                        value={productName}
+                        onChange={(e) => setProductName(e.target.value)}
+                        onBlur={formik.handleBlur}
+                      />
+                      <TextField
+                        id="quantity"
+                        label=" quantity"
+                        variant="outlined"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                      />
+                      <TextField
+                        id="price"
+                        label="price"
+                        variant="outlined"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                      />
+                      <TextField
+                        id="photoUrl"
+                        label="photoUrl"
+                        variant="outlined"
+                        value={photoUrl}
+                        onChange={(e) => setPhotoUrl(e.target.value)}
+                      />
+                      <button onClick={() => EditFunc(item._id)}>save</button>
+                    </>
+                  ) : (
+                    <div>
+                      <Link to={`/products/${item._id}`}>
+                        <img src={item.photoUrl} alt="" />
+                      </Link>
+                      <p>{item.productName}</p>
 
-                  <p>price:{item.price}</p>
-                  <p>quantity:{item.quantity}</p>
-                  <div className={scss.buttons}>
-                    <button onClick={() => DeleteFunc(item._id)}>delete</button>
-                    <button onClick={() => basket(item._id)}>
-                      {" "}
-                      add to Basket
-                    </button>
-                    <input
-                      className={scss.favorite}
-                      onClick={() => {
-                        postfavorite(item._id);
-                      }}
-                      type="checkbox"
-                    />
-                  </div>
+                      <p>price:{item.price}</p>
+                      <p>quantity:{item.quantity}</p>
+                      <div className={scss.buttons}>
+                        <button onClick={() => DeleteFunc(item._id)}>
+                          delete
+                        </button>
+                        <button onClick={() => basket(item._id)}>
+                          add to Basket
+                        </button>
+                        <input
+                          className={scss.favorite}
+                          onClick={() => {
+                            postfavorite(item._id);
+                          }}
+                          type="checkbox"
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          setEdit(+item._id);
+                          upData(item);
+                        }}
+                      >
+                        edit
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </>

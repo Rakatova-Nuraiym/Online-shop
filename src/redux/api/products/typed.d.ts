@@ -1,22 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PRODUCTS {
-  type data = {
-    data: {
-      isFavorite:boolean
-      productName: string;
-      quantity: string | null;
-      price: string | null;
-      photoUrl: string;
-      _id: string;
-      __v: number;
-    };
-  }[]
-
-
   type GetProductResponse = {
     productName: string;
-    quantity: string | null;
-    price: string | null;
+    quantity: string;
+    price: string;
     photoUrl: string;
     _id: string;
     __v: number;
@@ -34,7 +21,21 @@ namespace PRODUCTS {
     quantity: string;
     price: string;
     photoUrl: string;
-    _id?: string;
-    __v?: string;
-  }[];
+  };
+
+  type EditProductResponse = {
+    productName: string;
+    quantity: string;
+    price: string;
+    photoUrl: string;
+  };
+  type EditProductRequest = {
+    _id: string;
+    newData: {
+      productName: string;
+      quantity: string;
+      price: string;
+      photoUrl: string;
+    };
+  };
 }

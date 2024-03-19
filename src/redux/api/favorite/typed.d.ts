@@ -2,14 +2,14 @@
 namespace Favorite {
   type GetProductResponse = {
     productName: string;
-    quantity: number | null;
+    quantity: number;
     price: number | null;
     photoUrl: string;
     _id: string;
     __v: number;
     product: {
       productName: string;
-      quantity: number | null;
+      quantity: number;
       price: number | null;
       photoUrl: string;
       _id: string;
@@ -19,7 +19,7 @@ namespace Favorite {
 
   type PostProductResponse = {
     productName: string;
-    quantity: number | null;
+    quantity: number;
     price: number | null;
     photoUrl: string;
     _id: string;
