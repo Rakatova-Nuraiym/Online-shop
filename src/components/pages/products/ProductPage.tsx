@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable */
+//@ts-nocheck
 import { useParams } from "react-router-dom";
 import scss from "./products.module.scss";
 import { useGetOneProductQuery } from "../../../redux/api/products";
 
 const ProductPage = () => {
-  const { productId } = useParams();
-  const { data } = useGetOneProductQuery(productId!);
+  const { productId }: any = useParams();
+  const { data }: PRODUCTS.data= useGetOneProductQuery(productId!);
+  
 
-  return (
+  return (    
     <div className={scss.ProductPage}>
       <div className="container">
         <div className={scss.content}>

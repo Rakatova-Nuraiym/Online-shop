@@ -1,5 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PRODUCTS {
+  type data = {
+    data: {
+      isFavorite:boolean
+      productName: string;
+      quantity: string | null;
+      price: string | null;
+      photoUrl: string;
+      _id: string;
+      __v: number;
+    };
+  }[]
+
+
   type GetProductResponse = {
     productName: string;
     quantity: string | null;
