@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace PRODUCTS {
   type GetProductResponse = {
+    isFavorite: boolean;
     productName: string;
     quantity: string;
     price: string;

@@ -13,6 +13,27 @@
       align-items: flex-start;
       justify-content: center;
       gap: 10px;
+
+      .mainpart {
+        .last {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 3px 4px 4px 4px;
+
+          .editButton {
+            margin-left: 15px;
+          }
+          .heart {
+            width: 30px;
+            height: 30px;
+          }
+          .heartRed {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
       .favorite {
         width: 50px;
       }
@@ -20,6 +41,7 @@
         width: 360px;
         height: 500px;
       }
+
       .buttons {
         display: flex;
         justify-content: space-around;
@@ -34,6 +56,7 @@
         color: white;
         border: none;
       }
+
       p {
         color: rgb(18, 19, 20);
         padding-left: 16px;

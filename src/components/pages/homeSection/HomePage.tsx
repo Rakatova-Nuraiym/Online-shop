@@ -39,6 +39,9 @@ const HomePage = () => {
   const [editProducts] = useEditProductsMutation();
   const { data, isLoading } = useGetProductsQuery();
 
+  const [, setIsFavorite] = useState(false);
+  const [itemFavorite, setItemFavorite] = useState<null | string>(null);
+
   console.log(modal);
   const formik = useFormik({
     initialValues: {
@@ -64,6 +67,8 @@ const HomePage = () => {
 
   const postfavorite = async (id: string) => {
     await postFavoriteProducts(id);
+    setIsFavorite(true);
+    setItemFavorite(null);
   };
 
   const basket = async (id: string) => {
@@ -173,7 +178,7 @@ const HomePage = () => {
                       <button onClick={() => EditFunc(item._id)}>save</button>
                     </>
                   ) : (
-                    <div>
+                    <div className={scss.mainpart}>
                       <Link to={`/products/${item._id}`}>
                         <img src={item.photoUrl} alt="" />
                       </Link>
@@ -188,22 +193,44 @@ const HomePage = () => {
                         <button onClick={() => basket(item._id)}>
                           add to Basket
                         </button>
-                        <input
-                          className={scss.favorite}
-                          onClick={() => {
-                            postfavorite(item._id);
-                          }}
-                          type="checkbox"
-                        />
                       </div>
-                      <button
-                        onClick={() => {
-                          setEdit(item._id);
-                          upData(item);
-                        }}
-                      >
-                        edit
-                      </button>
+                      <div className={scss.last}>
+                        <button
+                          className={scss.editButton}
+                          onClick={() => {
+                            setEdit(item._id);
+                            upData(item);
+                          }}
+                        >
+                          edit
+                        </button>
+                        {itemFavorite === item._id ||
+                        item.isFavorite === true ? (
+                          <>
+                            {" "}
+                            <img
+                              onClick={() => {
+                                postfavorite(item._id);
+                                setItemFavorite(null);
+                              }}
+                              className={scss.heartRed}
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8rhnbyViBii9Zgp_nz81682wg65hhxTG_9edPgQw15w&s"
+                              alt=""
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              onClick={() => {
+                                postfavorite(item._id);
+                              }}
+                              className={scss.heart}
+                              src="https://www.iconpacks.net/icons/2/free-heart-icon-3510-thumb.png"
+                              alt=""
+                            />
+                          </>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
