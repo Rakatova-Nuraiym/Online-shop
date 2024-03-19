@@ -7,6 +7,13 @@ namespace Favorite {
     photoUrl: string;
     _id: string;
     __v: number;
+    product: {
+      productName: string;
+      quantity: number | null;
+      price: number | null;
+      photoUrl: string;
+      _id: string;
+    };
   }[];
   type GetProductRequest = void;
 
