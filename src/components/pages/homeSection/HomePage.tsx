@@ -31,7 +31,7 @@ const HomePage = () => {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
-  const [edit, setEdit] = useState<number | null>(null);
+  const [edit, setEdit] = useState<string | null>(null);
   const [postProducts] = usePostProductsMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [postFavoriteProducts] = usePostFavoriteProductsMutation();
@@ -70,6 +70,8 @@ const HomePage = () => {
     await postBacketProducts(id);
   };
 
+  console.log(edit);
+
   const EditFunc = async (_id: string) => {
     const newData = {
       productName,
@@ -82,7 +84,7 @@ const HomePage = () => {
   };
 
   const upData = (item: itemType) => {
-    setEdit(+item._id);
+    setEdit(item._id);
     setProductName(item.productName);
     setQuantity(item.quantity);
     setPrice(item.price);
@@ -137,7 +139,7 @@ const HomePage = () => {
             <>
               {data?.map((item) => (
                 <div className={scss.productCard} key={item._id}>
-                  {edit === +item._id ? (
+                  {edit === item._id ? (
                     <>
                       <TextField
                         id="productName"
@@ -196,7 +198,7 @@ const HomePage = () => {
                       </div>
                       <button
                         onClick={() => {
-                          setEdit(+item._id);
+                          setEdit(item._id);
                           upData(item);
                         }}
                       >
