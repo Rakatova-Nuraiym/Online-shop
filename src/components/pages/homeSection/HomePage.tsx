@@ -25,8 +25,11 @@ type itemType = {
 const HomePage = () => {
   const [modal, setModal] = useState(false);
   const handleModal = () => {
-    setModal(!modal);
+    setModal(true);
   };
+  // const handleCloseModal = () => {
+  //   setModal(false);
+  // };
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
@@ -37,12 +40,11 @@ const HomePage = () => {
   const [postFavoriteProducts] = usePostFavoriteProductsMutation();
   const [postBacketProducts] = usePostBacketProductsMutation();
   const [editProducts] = useEditProductsMutation();
-  const { data, isLoading } = useGetProductsQuery();
+  const { data, isLoading, refetch } = useGetProductsQuery();
 
   const [, setIsFavorite] = useState(false);
   const [itemFavorite, setItemFavorite] = useState<null | string>(null);
 
-  console.log(modal);
   const formik = useFormik({
     initialValues: {
       productName: "",
@@ -50,7 +52,7 @@ const HomePage = () => {
       price: "",
       photoUrl: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const products = {
         productName: values.productName,
         quantity: values.quantity,
@@ -58,6 +60,8 @@ const HomePage = () => {
         photoUrl: values.photoUrl,
       };
       await postProducts(products);
+
+      resetForm();
     },
   });
 
@@ -69,6 +73,7 @@ const HomePage = () => {
     await postFavoriteProducts(id);
     setIsFavorite(true);
     setItemFavorite(null);
+    refetch();
   };
 
   const basket = async (id: string) => {
