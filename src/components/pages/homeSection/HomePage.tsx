@@ -27,9 +27,9 @@ const HomePage = () => {
   const handleModal = () => {
     setModal(true);
   };
-  // const handleCloseModal = () => {
-  //   setModal(false);
-  // };
+  const handleCloseModal = () => {
+    setModal(false);
+  };
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
@@ -60,6 +60,8 @@ const HomePage = () => {
         photoUrl: values.photoUrl,
       };
       await postProducts(products);
+      refetch();
+      handleCloseModal();
 
       resetForm();
     },
@@ -106,7 +108,7 @@ const HomePage = () => {
         <button onClick={handleModal}>add product</button>
 
         <div className={scss.content}>
-          <Modal isOpen={modal} OnClose={handleModal}>
+          <Modal isOpen={modal} OnClose={handleCloseModal}>
             <TextField
               id="productName"
               label="product name"
